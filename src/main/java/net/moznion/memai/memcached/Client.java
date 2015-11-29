@@ -17,7 +17,7 @@ public class Client {
 
     public static void main(String... args) throws IOException {
         final Client client = new Client(new InetSocketAddress("localhost", 11211), 1);
-        client.set("fuga", "un".getBytes())
+        client.set("fuga", "un")
                 .exptime(100)
                 .execute();
     }
@@ -34,7 +34,7 @@ public class Client {
         }
     }
 
-    public TextSetCommand set(final String key, final byte[] data) {
+    public TextSetCommand set(final String key, final String data) {
         balance();
         return new TextSetCommand(new TextSetProtocol(key, data), workers.get(cursor));
     }

@@ -5,14 +5,14 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(fluent = true)
-public class TextSetProtocol implements TextStorageProtocol<TextSetProtocol> {
+public class TextPrependProtocol implements TextStorageProtocol<TextPrependProtocol> {
     private String key;
     private String data;
     private int flags;
     private int exptime;
     private boolean noreply;
 
-    public TextSetProtocol(final String key, final String data) {
+    public TextPrependProtocol(final String key, final String data) {
         if (data.length() == 0) {
             throw new IllegalArgumentException("TODO");
         }
@@ -26,6 +26,6 @@ public class TextSetProtocol implements TextStorageProtocol<TextSetProtocol> {
 
     @Override
     public String command() {
-        return "set";
+        return "prepend";
     }
 }
