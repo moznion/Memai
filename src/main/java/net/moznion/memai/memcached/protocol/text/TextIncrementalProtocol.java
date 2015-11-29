@@ -2,7 +2,7 @@ package net.moznion.memai.memcached.protocol.text;
 
 import net.moznion.memai.memcached.protocol.Protocol;
 
-public interface TextIncrDecrProtocol<T> extends Protocol {
+public interface TextIncrementalProtocol<T> extends Protocol {
     T key(String key);
 
     T value(long value);

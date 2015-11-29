@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(fluent = true)
-public class TextDecrementProtocol implements TextIncrDecrProtocol<TextDecrementProtocol> {
+public class TextDecrementProtocol implements TextIncrementalProtocol<TextDecrementProtocol> {
     String key;
     long value;
     boolean noreply;
