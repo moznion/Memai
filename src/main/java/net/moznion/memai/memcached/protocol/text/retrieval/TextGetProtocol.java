@@ -1,4 +1,4 @@
-package net.moznion.memai.memcached.protocol.text;
+package net.moznion.memai.memcached.protocol.text.retrieval;
 
 import lombok.Getter;
 

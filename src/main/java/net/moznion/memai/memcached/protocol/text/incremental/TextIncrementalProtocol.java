@@ -1,4 +1,4 @@
-package net.moznion.memai.memcached.protocol.text;
+package net.moznion.memai.memcached.protocol.text.incremental;
 
 import net.moznion.memai.memcached.protocol.Protocol;
 

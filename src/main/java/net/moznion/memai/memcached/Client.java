@@ -1,7 +1,7 @@
 package net.moznion.memai.memcached;
 
 import net.moznion.memai.memcached.command.TextSetCommand;
-import net.moznion.memai.memcached.protocol.text.TextSetProtocol;
+import net.moznion.memai.memcached.protocol.text.storage.TextSetProtocol;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

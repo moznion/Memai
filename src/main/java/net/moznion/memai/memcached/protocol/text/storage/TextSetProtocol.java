@@ -1,18 +1,18 @@
-package net.moznion.memai.memcached.protocol.text;
+package net.moznion.memai.memcached.protocol.text.storage;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(fluent = true)
-public class TextReplaceProtocol implements TextStorageProtocol<TextReplaceProtocol> {
+public class TextSetProtocol implements TextStorageProtocol<TextSetProtocol> {
     private String key;
     private String data;
     private int flags;
     private int exptime;
     private boolean noreply;
 
-    public TextReplaceProtocol(final String key, final String data) {
+    public TextSetProtocol(final String key, final String data) {
         this.key = key;
         this.data = data;
         this.flags = 0;
@@ -22,6 +22,6 @@ public class TextReplaceProtocol implements TextStorageProtocol<TextReplaceProto
 
     @Override
     public String command() {
-        return "replace";
+        return "set";
     }
 }
