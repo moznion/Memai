@@ -24,7 +24,7 @@ public interface TextIncrDecrProtocol<T> extends Protocol {
                 .append(" ").append(value());
 
         if (noreply()) {
-            sb.append(" ").append("noreply");
+            sb.append(" noreply");
         }
 
         return sb.toString().getBytes();

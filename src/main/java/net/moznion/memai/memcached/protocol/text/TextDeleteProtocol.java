@@ -1,18 +1,18 @@
 package net.moznion.memai.memcached.protocol.text;
 
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 import net.moznion.memai.memcached.protocol.Protocol;
 
+@Data
+@Accessors(fluent = true)
 public class TextDeleteProtocol implements Protocol {
     private String key;
-
-    @Setter
-    @Accessors(fluent = true)
     private boolean noreply;
 
     public TextDeleteProtocol(String key) {
         this.key = key;
+        this.noreply = false;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class TextDeleteProtocol implements Protocol {
                 .append(key);
 
         if (noreply) {
-            sb.append(" ").append("noreply");
+            sb.append(" noreply");
         }
 
         sb.append("\r\n");

@@ -13,6 +13,8 @@ public class TextDecrementProtocol implements TextIncrDecrProtocol<TextDecrement
     public TextDecrementProtocol(String key, long value) {
         this.key = key;
         this.value = value;
+
+        this.noreply = false;
     }
 
     public String command() {

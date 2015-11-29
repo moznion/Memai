@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TextGetsProtocol implements TextRetrievalProtocol<TextGetsProtocol>{
+public class TextGetsProtocol implements TextRetrievalProtocol<TextGetsProtocol> {
     @Getter
     private List<String> keys;
 

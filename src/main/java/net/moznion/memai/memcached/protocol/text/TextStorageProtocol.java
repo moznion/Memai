@@ -34,7 +34,7 @@ public interface TextStorageProtocol<T> extends Protocol {
                 .append(" ").append(data().length());
 
         if (noreply()) {
-            sb.append(" ").append("noreply");
+            sb.append(" noreply");
         }
 
         sb.append("\r\n")

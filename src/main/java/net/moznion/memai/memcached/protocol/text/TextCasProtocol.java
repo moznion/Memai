@@ -37,7 +37,7 @@ public class TextCasProtocol implements TextStorageProtocol<TextCasProtocol> {
                 .append(" ").append(casUnique());
 
         if (noreply()) {
-            sb.append(" ").append("noreply");
+            sb.append(" noreply");
         }
 
         sb.append("\r\n")
