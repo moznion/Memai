@@ -14,10 +14,6 @@ public class TextCasProtocol implements TextStorageProtocol<TextCasProtocol> {
     private long casUnique;
 
     public TextCasProtocol(final String key, final String data) {
-        if (data.length() == 0) {
-            throw new IllegalArgumentException("TODO");
-        }
-
         this.key = key;
         this.data = data;
         this.flags = 0;

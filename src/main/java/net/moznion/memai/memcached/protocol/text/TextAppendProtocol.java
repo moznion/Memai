@@ -13,10 +13,6 @@ public class TextAppendProtocol implements TextStorageProtocol<TextAppendProtoco
     private boolean noreply;
 
     public TextAppendProtocol(final String key, final String data) {
-        if (data.length() == 0) {
-            throw new IllegalArgumentException("TODO");
-        }
-
         this.key = key;
         this.data = data;
         this.flags = 0;

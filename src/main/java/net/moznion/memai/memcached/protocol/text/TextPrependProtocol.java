@@ -13,10 +13,6 @@ public class TextPrependProtocol implements TextStorageProtocol<TextPrependProto
     private boolean noreply;
 
     public TextPrependProtocol(final String key, final String data) {
-        if (data.length() == 0) {
-            throw new IllegalArgumentException("TODO");
-        }
-
         this.key = key;
         this.data = data;
         this.flags = 0;

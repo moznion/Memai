@@ -13,10 +13,6 @@ public class TextSetProtocol implements TextStorageProtocol<TextSetProtocol> {
     private boolean noreply;
 
     public TextSetProtocol(final String key, final String data) {
-        if (data.length() == 0) {
-            throw new IllegalArgumentException("TODO");
-        }
-
         this.key = key;
         this.data = data;
         this.flags = 0;

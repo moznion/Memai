@@ -13,10 +13,6 @@ public class TextReplaceProtocol implements TextStorageProtocol<TextReplaceProto
     private boolean noreply;
 
     public TextReplaceProtocol(final String key, final String data) {
-        if (data.length() == 0) {
-            throw new IllegalArgumentException("TODO");
-        }
-
         this.key = key;
         this.data = data;
         this.flags = 0;
