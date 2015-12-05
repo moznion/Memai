@@ -9,7 +9,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class DeleteResponse implements Response<DeleteResponseType> {
-    private boolean succeeded;
     private DeleteResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
 }

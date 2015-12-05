@@ -12,11 +12,12 @@ public class TextTouchResponseProtocol implements TextResponseProtocol<TouchResp
 
         switch (trimmed) {
             case "TOUCHED":
-                return new TouchResponse(true, TouchResponseType.TOUCHED, Optional.empty());
+                return new TouchResponse(TouchResponseType.TOUCHED, Optional.empty());
             case "NOT_FOUND":
-                return new TouchResponse(true, TouchResponseType.NOT_FOUND, Optional.empty());
+                return new TouchResponse(TouchResponseType.NOT_FOUND, Optional.empty());
             default:
-                return new TouchResponse(false, null, Optional.of(new TextErrorResponseProtocol().parse(response)));
+                return new TouchResponse(TouchResponseType.ERROR,
+                        Optional.of(new TextErrorResponseProtocol().parse(response)));
         }
     }
 }

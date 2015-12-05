@@ -9,7 +9,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class FlushAllResponse implements Response<FlushAllResponseType> {
-    private boolean succeeded;
     private FlushAllResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
 }

@@ -9,7 +9,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class TouchResponse implements Response<TouchResponseType> {
-    private boolean succeeded;
     private TouchResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
 }

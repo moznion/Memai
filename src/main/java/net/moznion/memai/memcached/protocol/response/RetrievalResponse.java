@@ -10,7 +10,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class RetrievalResponse implements Response<RetrievalResponseType> {
-    private boolean succeeded;
     private RetrievalResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
     private Map<String, ValueResponse> values;

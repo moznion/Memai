@@ -12,15 +12,16 @@ public class TextStorageResponseProtocol implements TextResponseProtocol<Storage
 
         switch (trimmed) {
             case "STORED":
-                return new StorageResponse(true, StorageResponseType.STORED, Optional.empty());
+                return new StorageResponse(StorageResponseType.STORED, Optional.empty());
             case "NOT_STORED":
-                return new StorageResponse(true, StorageResponseType.NOT_STORED, Optional.empty());
+                return new StorageResponse(StorageResponseType.NOT_STORED, Optional.empty());
             case "EXISTS":
-                return new StorageResponse(true, StorageResponseType.EXISTS, Optional.empty());
+                return new StorageResponse(StorageResponseType.EXISTS, Optional.empty());
             case "NOT_FOUND":
-                return new StorageResponse(true, StorageResponseType.NOT_FOUND, Optional.empty());
+                return new StorageResponse(StorageResponseType.NOT_FOUND, Optional.empty());
             default:
-                return new StorageResponse(false, null, Optional.of(new TextErrorResponseProtocol().parse(response)));
+                return new StorageResponse(StorageResponseType.ERROR,
+                        Optional.of(new TextErrorResponseProtocol().parse(response)));
         }
     }
 }

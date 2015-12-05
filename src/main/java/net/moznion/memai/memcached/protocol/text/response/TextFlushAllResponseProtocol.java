@@ -8,9 +8,9 @@ import java.util.Optional;
 public class TextFlushAllResponseProtocol implements TextResponseProtocol<FlushAllResponse> {
     public FlushAllResponse parse(final String response) {
         if (!response.trim().equals("OK")) {
-            return new FlushAllResponse(false, FlushAllResponseType.FAILED, Optional.empty());
+            return new FlushAllResponse(FlushAllResponseType.FAILED, Optional.empty());
         }
 
-        return new FlushAllResponse(true, FlushAllResponseType.OK, Optional.empty());
+        return new FlushAllResponse(FlushAllResponseType.OK, Optional.empty());
     }
 }

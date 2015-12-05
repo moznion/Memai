@@ -10,7 +10,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class StatsResponse implements Response<StatsResponseType> {
-    private boolean succeeded;
     private StatsResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
     private Map<String, String> stats;

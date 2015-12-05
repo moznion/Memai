@@ -9,7 +9,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public class StorageResponse implements Response<StorageResponseType> {
-    private boolean succeeded;
     private StorageResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
 }

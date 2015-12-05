@@ -12,14 +12,14 @@ public class TextIncrementalResponseProtocol implements TextResponseProtocol<Inc
         final String trimmed = response.trim();
 
         if (trimmed.equals("NOT_FOUND")) {
-            return new IncrementalResponse(false, IncrementalResponseType.NOT_FOUND, Optional.empty(), OptionalLong.empty());
+            return new IncrementalResponse(IncrementalResponseType.NOT_FOUND, Optional.empty(), OptionalLong.empty());
         }
 
         try {
             final long l = Long.parseLong(trimmed, 10);
-            return new IncrementalResponse(true, IncrementalResponseType.VALUE_CHANGED, Optional.empty(), OptionalLong.of(l));
+            return new IncrementalResponse(IncrementalResponseType.VALUE_CHANGED, Optional.empty(), OptionalLong.of(l));
         } catch (NumberFormatException e) {
-            return new IncrementalResponse(false, null,
+            return new IncrementalResponse(IncrementalResponseType.ERROR,
                     Optional.of(new TextErrorResponseProtocol().parse(response)), OptionalLong.empty());
         }
     }
