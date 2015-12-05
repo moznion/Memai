@@ -1,4 +1,4 @@
-package net.moznion.memai.memcached.protocol.text.retrieval;
+package net.moznion.memai.memcached.protocol.text.request.retrieval;
 
 import lombok.Getter;
 
@@ -6,59 +6,59 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TextGetsProtocol implements TextRetrievalProtocol<TextGetsProtocol> {
+public class TextGetProtocol implements TextRetrievalProtocol<TextGetProtocol> {
     @Getter
     private List<String> keys;
 
-    public TextGetsProtocol(String key) {
+    public TextGetProtocol(String key) {
         this.keys = new ArrayList<>();
         this.keys.add(key);
     }
 
-    public TextGetsProtocol(String... keys) {
+    public TextGetProtocol(String... keys) {
         this.keys = new ArrayList<>();
         this.keys.addAll(Arrays.asList(keys));
     }
 
-    public TextGetsProtocol(List<String> keys) {
+    public TextGetProtocol(List<String> keys) {
         this.keys = new ArrayList<>();
         this.keys.addAll(keys);
     }
 
     @Override
-    public TextGetsProtocol setKeys(String... keys) {
+    public TextGetProtocol setKeys(String... keys) {
         this.keys.clear();
         this.keys.addAll(Arrays.asList(keys));
         return this;
     }
 
     @Override
-    public TextGetsProtocol setKeys(List<String> keys) {
+    public TextGetProtocol setKeys(List<String> keys) {
         this.keys.clear();
         this.keys.addAll(keys);
         return this;
     }
 
     @Override
-    public TextGetsProtocol appendKeys(String... keys) {
+    public TextGetProtocol appendKeys(String... keys) {
         this.keys.addAll(Arrays.asList(keys));
         return this;
     }
 
     @Override
-    public TextGetsProtocol appendKeys(List<String> keys) {
+    public TextGetProtocol appendKeys(List<String> keys) {
         this.keys.addAll(keys);
         return this;
     }
 
     @Override
-    public TextGetsProtocol appendKey(String key) {
+    public TextGetProtocol appendKey(String key) {
         this.keys.add(key);
         return this;
     }
 
     @Override
     public String command() {
-        return "gets";
+        return "get";
     }
 }

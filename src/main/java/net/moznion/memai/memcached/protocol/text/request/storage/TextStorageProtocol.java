@@ -1,4 +1,4 @@
-package net.moznion.memai.memcached.protocol.text.storage;
+package net.moznion.memai.memcached.protocol.text.request.storage;
 
 import net.moznion.memai.memcached.protocol.Protocol;
 
