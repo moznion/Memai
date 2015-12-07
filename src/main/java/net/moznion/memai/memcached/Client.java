@@ -1,14 +1,24 @@
 package net.moznion.memai.memcached;
 
+import net.moznion.memai.memcached.command.AddCommand;
+import net.moznion.memai.memcached.command.AppendCommand;
+import net.moznion.memai.memcached.command.CasCommand;
 import net.moznion.memai.memcached.command.DecrementCommand;
 import net.moznion.memai.memcached.command.GetCommand;
 import net.moznion.memai.memcached.command.GetsCommand;
 import net.moznion.memai.memcached.command.IncrementCommand;
+import net.moznion.memai.memcached.command.PrependCommand;
+import net.moznion.memai.memcached.command.ReplaceCommand;
 import net.moznion.memai.memcached.command.SetCommand;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextDecrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextIncrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetProtocol;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetsProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextAddProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextAppendProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextCasProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextPrependProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextReplaceProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextSetProtocol;
 
 import java.io.IOException;
@@ -38,6 +48,31 @@ public class Client {
     public SetCommand set(final String key, final String data) {
         balance();
         return new SetCommand(new TextSetProtocol(key, data), workers.get(cursor));
+    }
+
+    public AddCommand add(final String key, final String data) {
+        balance();
+        return new AddCommand(new TextAddProtocol(key, data), workers.get(cursor));
+    }
+
+    public AppendCommand append(final String key, final String data) {
+        balance();
+        return new AppendCommand(new TextAppendProtocol(key, data), workers.get(cursor));
+    }
+
+    public CasCommand cas(final String key, final String data) {
+        balance();
+        return new CasCommand(new TextCasProtocol(key, data), workers.get(cursor));
+    }
+
+    public PrependCommand prepend(final String key, final String data) {
+        balance();
+        return new PrependCommand(new TextPrependProtocol(key, data), workers.get(cursor));
+    }
+
+    public ReplaceCommand replace(final String key, final String data) {
+        balance();
+        return new ReplaceCommand(new TextReplaceProtocol(key, data), workers.get(cursor));
     }
 
     public GetCommand get(final String key) {
