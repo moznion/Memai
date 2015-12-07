@@ -5,11 +5,11 @@ import net.moznion.memai.memcached.protocol.text.request.incremental.TextDecreme
 
 import java.util.concurrent.CompletableFuture;
 
-public class TextDecrementCommand implements Command<TextDecrementProtocol> {
+public class DecrementCommand implements Command<TextDecrementProtocol> {
     private final Worker worker;
     private final TextDecrementProtocol protocol;
 
-    public TextDecrementCommand(final TextDecrementProtocol textDecrementProtocol, final Worker worker) {
+    public DecrementCommand(final TextDecrementProtocol textDecrementProtocol, final Worker worker) {
         this.protocol = textDecrementProtocol;
         this.worker = worker;
     }
@@ -19,17 +19,17 @@ public class TextDecrementCommand implements Command<TextDecrementProtocol> {
         return worker.appendJob(protocol);
     }
 
-    public TextDecrementCommand key(final String key) {
+    public DecrementCommand key(final String key) {
         protocol.key(key);
         return this;
     }
 
-    public TextDecrementCommand value(final long value) {
+    public DecrementCommand value(final long value) {
         protocol.value(value);
         return this;
     }
 
-    public TextDecrementCommand noreply(final boolean noreply) {
+    public DecrementCommand noreply(final boolean noreply) {
         protocol.noreply(noreply);
         return this;
     }

@@ -6,11 +6,11 @@ import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetsProto
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class TextGetsCommand implements Command<TextGetsProtocol> {
+public class GetsCommand implements Command<TextGetsProtocol> {
     private final Worker worker;
     private final TextGetsProtocol protocol;
 
-    public TextGetsCommand(final TextGetsProtocol textGetsProtocol, final Worker worker) {
+    public GetsCommand(final TextGetsProtocol textGetsProtocol, final Worker worker) {
         this.protocol = textGetsProtocol;
         this.worker = worker;
     }
@@ -20,32 +20,32 @@ public class TextGetsCommand implements Command<TextGetsProtocol> {
         return this.worker.appendJob(protocol);
     }
 
-    public TextGetsCommand setKeys(String... keys) {
+    public GetsCommand setKeys(String... keys) {
         protocol.setKeys(keys);
         return this;
     }
 
-    public TextGetsCommand setKeys(List<String> keys) {
+    public GetsCommand setKeys(List<String> keys) {
         protocol.setKeys(keys);
         return this;
     }
 
-    public TextGetsCommand setKey(String key) {
+    public GetsCommand setKey(String key) {
         protocol.setKey(key);
         return this;
     }
 
-    public TextGetsCommand appendKeys(String... keys) {
+    public GetsCommand appendKeys(String... keys) {
         protocol.appendKeys(keys);
         return this;
     }
 
-    public TextGetsCommand appendKeys(List<String> keys) {
+    public GetsCommand appendKeys(List<String> keys) {
         protocol.appendKeys(keys);
         return this;
     }
 
-    public TextGetsCommand appendKey(String key) {
+    public GetsCommand appendKey(String key) {
         protocol.appendKey(key);
         return this;
     }

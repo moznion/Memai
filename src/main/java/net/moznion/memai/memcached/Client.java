@@ -1,8 +1,8 @@
 package net.moznion.memai.memcached;
 
-import net.moznion.memai.memcached.command.TextGetCommand;
-import net.moznion.memai.memcached.command.TextGetsCommand;
-import net.moznion.memai.memcached.command.TextSetCommand;
+import net.moznion.memai.memcached.command.GetCommand;
+import net.moznion.memai.memcached.command.GetsCommand;
+import net.moznion.memai.memcached.command.SetCommand;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetProtocol;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetsProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextSetProtocol;
@@ -31,39 +31,39 @@ public class Client {
         }
     }
 
-    public TextSetCommand set(final String key, final String data) {
+    public SetCommand set(final String key, final String data) {
         balance();
-        return new TextSetCommand(new TextSetProtocol(key, data), workers.get(cursor));
+        return new SetCommand(new TextSetProtocol(key, data), workers.get(cursor));
     }
 
-    public TextGetCommand get(final String key) {
+    public GetCommand get(final String key) {
         balance();
-        return new TextGetCommand(new TextGetProtocol(key), workers.get(cursor));
+        return new GetCommand(new TextGetProtocol(key), workers.get(cursor));
     }
 
-    public TextGetCommand get(final String... keys) {
+    public GetCommand get(final String... keys) {
         balance();
-        return new TextGetCommand(new TextGetProtocol(keys), workers.get(cursor));
+        return new GetCommand(new TextGetProtocol(keys), workers.get(cursor));
     }
 
-    public TextGetCommand get(final List<String> keys) {
+    public GetCommand get(final List<String> keys) {
         balance();
-        return new TextGetCommand(new TextGetProtocol(keys), workers.get(cursor));
+        return new GetCommand(new TextGetProtocol(keys), workers.get(cursor));
     }
 
-    public TextGetsCommand gets(final String key) {
+    public GetsCommand gets(final String key) {
         balance();
-        return new TextGetsCommand(new TextGetsProtocol(key), workers.get(cursor));
+        return new GetsCommand(new TextGetsProtocol(key), workers.get(cursor));
     }
 
-    public TextGetsCommand gets(final String... keys) {
+    public GetsCommand gets(final String... keys) {
         balance();
-        return new TextGetsCommand(new TextGetsProtocol(keys), workers.get(cursor));
+        return new GetsCommand(new TextGetsProtocol(keys), workers.get(cursor));
     }
 
-    public TextGetsCommand gets(final List<String> keys) {
+    public GetsCommand gets(final List<String> keys) {
         balance();
-        return new TextGetsCommand(new TextGetsProtocol(keys), workers.get(cursor));
+        return new GetsCommand(new TextGetsProtocol(keys), workers.get(cursor));
     }
 
     public void shutdown() {
