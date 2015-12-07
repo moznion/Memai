@@ -2,6 +2,7 @@ package net.moznion.memai.memcached;
 
 import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.response.Response;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -25,8 +26,8 @@ public class Worker implements Runnable {
         this.address = address;
     }
 
-    public <T extends Protocol> CompletableFuture<T> appendJob(T job) {
-        final CompletableFuture<T> future = new CompletableFuture<>();
+    public <T extends Protocol> CompletableFuture<? extends Response> appendJob(T job) {
+        final CompletableFuture<? extends Response> future = new CompletableFuture<>();
         final JobWithFuture<T> jobWithFuture = new JobWithFuture<>(job, future);
         queue.add(jobWithFuture);
         return future;
@@ -35,9 +36,9 @@ public class Worker implements Runnable {
     @Override
     public void run() {
         while (true) {
+            JobWithFuture<? extends Protocol> jobWithFuture = null;
             try {
-                final JobWithFuture<? extends Protocol> jobWithFuture = queue.take();
-
+                jobWithFuture = queue.take();
                 final Protocol job = jobWithFuture.job;
                 final byte[] built = job.build();
 
@@ -49,6 +50,7 @@ public class Worker implements Runnable {
                 out.write(built);
                 out.flush();
 
+                // TODO noreply support
                 final DataInputStream in = new DataInputStream(socket.getInputStream());
                 try (final BufferedReader buff = new BufferedReader(new InputStreamReader(in))) {
                     final String res = buff.readLine();
@@ -56,9 +58,9 @@ public class Worker implements Runnable {
 
                 out.close();
                 in.close();
-            } catch (InterruptedException e) {
-                // TODO
             } catch (Throwable e) {
+                // TODO
+            } finally {
                 // TODO
             }
         }
@@ -67,6 +69,6 @@ public class Worker implements Runnable {
     @AllArgsConstructor
     private static class JobWithFuture<T extends Protocol> {
         private T job;
-        private CompletableFuture<T> future;
+        private CompletableFuture<? extends Response> future;
     }
 }
