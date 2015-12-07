@@ -4,12 +4,14 @@ import net.moznion.memai.memcached.command.AddCommand;
 import net.moznion.memai.memcached.command.AppendCommand;
 import net.moznion.memai.memcached.command.CASCommand;
 import net.moznion.memai.memcached.command.DecrementCommand;
+import net.moznion.memai.memcached.command.DeleteCommand;
 import net.moznion.memai.memcached.command.GetCommand;
 import net.moznion.memai.memcached.command.GetsCommand;
 import net.moznion.memai.memcached.command.IncrementCommand;
 import net.moznion.memai.memcached.command.PrependCommand;
 import net.moznion.memai.memcached.command.ReplaceCommand;
 import net.moznion.memai.memcached.command.SetCommand;
+import net.moznion.memai.memcached.protocol.text.request.TextDeleteProtocol;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextDecrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextIncrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetProtocol;
@@ -113,6 +115,11 @@ public class Client {
     public DecrementCommand decr(final String key, final long value) {
         balance();
         return new DecrementCommand(new TextDecrementProtocol(key, value), workers.get(cursor));
+    }
+
+    public DeleteCommand delete(final String key) {
+        balance();
+        return new DeleteCommand(new TextDeleteProtocol(key), workers.get(cursor));
     }
 
     public void shutdown() {
