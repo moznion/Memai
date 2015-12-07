@@ -17,7 +17,7 @@ public class GetsCommand implements Command<TextGetsProtocol> {
 
     @Override
     public CompletableFuture<TextGetsProtocol> execute() {
-        return this.worker.appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public GetsCommand setKeys(String... keys) {

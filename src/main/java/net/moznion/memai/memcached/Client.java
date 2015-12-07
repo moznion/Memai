@@ -13,9 +13,11 @@ import net.moznion.memai.memcached.command.PrependCommand;
 import net.moznion.memai.memcached.command.ReplaceCommand;
 import net.moznion.memai.memcached.command.SetCommand;
 import net.moznion.memai.memcached.command.StatsCommand;
+import net.moznion.memai.memcached.command.TouchCommand;
 import net.moznion.memai.memcached.protocol.text.request.TextDeleteProtocol;
 import net.moznion.memai.memcached.protocol.text.request.TextFlushAllProtocol;
 import net.moznion.memai.memcached.protocol.text.request.TextStatsProtocol;
+import net.moznion.memai.memcached.protocol.text.request.TextTouchProtocol;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextDecrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextIncrementProtocol;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetProtocol;
@@ -134,6 +136,11 @@ public class Client {
     public FlushAllCommand flushAll() {
         balance();
         return new FlushAllCommand(new TextFlushAllProtocol(), workers.get(cursor));
+    }
+
+    public TouchCommand touch(final String key, final int exptime) {
+        balance();
+        return new TouchCommand(new TextTouchProtocol(key, exptime), workers.get(cursor));
     }
 
     public void shutdown() {

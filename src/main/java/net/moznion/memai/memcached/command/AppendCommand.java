@@ -17,7 +17,7 @@ public class AppendCommand implements Command<TextAppendProtocol> {
 
     @Override
     public CompletableFuture<TextAppendProtocol> execute() {
-        return this.worker.appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public AppendCommand key(final String key) {
