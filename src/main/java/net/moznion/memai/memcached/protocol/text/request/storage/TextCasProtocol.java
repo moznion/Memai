@@ -2,6 +2,7 @@ package net.moznion.memai.memcached.protocol.text.request.storage;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
@@ -45,5 +46,10 @@ public class TextCASProtocol implements TextStorageProtocol<TextCASProtocol> {
                 .append("\r\n");
 
         return sb.toString().getBytes();
+    }
+
+    @Override
+    public TextStorageResponseProtocol getResponseProtocol() {
+        return new TextStorageResponseProtocol();
     }
 }

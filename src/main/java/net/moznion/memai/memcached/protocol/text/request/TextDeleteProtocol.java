@@ -2,11 +2,11 @@ package net.moznion.memai.memcached.protocol.text.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.response.TextDeleteResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
-public class TextDeleteProtocol implements Protocol {
+public class TextDeleteProtocol implements TextRequestProtocol<TextDeleteResponseProtocol> {
     private String key;
     private boolean noreply;
 
@@ -27,5 +27,10 @@ public class TextDeleteProtocol implements Protocol {
         sb.append("\r\n");
 
         return sb.toString().getBytes();
+    }
+
+    @Override
+    public TextDeleteResponseProtocol getResponseProtocol() {
+        return new TextDeleteResponseProtocol();
     }
 }

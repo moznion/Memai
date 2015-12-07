@@ -1,8 +1,9 @@
 package net.moznion.memai.memcached.protocol.text.request.incremental;
 
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextIncrementalResponseProtocol;
 
-public interface TextIncrementalProtocol<T> extends Protocol {
+public interface TextIncrementalProtocol<T> extends TextRequestProtocol<TextIncrementalResponseProtocol> {
     T key(String key);
 
     T value(long value);

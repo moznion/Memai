@@ -2,11 +2,11 @@ package net.moznion.memai.memcached.protocol.text.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.response.TextTouchResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
-public class TextTouchProtocol implements Protocol {
+public class TextTouchProtocol implements TextRequestProtocol<TextTouchResponseProtocol> {
     private String key;
     private int exptime;
     private boolean noreply;
@@ -31,5 +31,10 @@ public class TextTouchProtocol implements Protocol {
         sb.append("\r\n");
 
         return sb.toString().getBytes();
+    }
+
+    @Override
+    public TextTouchResponseProtocol getResponseProtocol() {
+        return new TextTouchResponseProtocol();
     }
 }

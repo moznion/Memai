@@ -2,11 +2,11 @@ package net.moznion.memai.memcached.protocol.text.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.response.TextFlushAllResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
-public class TextFlushAllProtocol implements Protocol {
+public class TextFlushAllProtocol implements TextRequestProtocol<TextFlushAllResponseProtocol> {
     private Integer duration;
 
     public TextFlushAllProtocol() {
@@ -28,5 +28,10 @@ public class TextFlushAllProtocol implements Protocol {
         return sb.append("\r\n")
                 .toString()
                 .getBytes();
+    }
+
+    @Override
+    public TextFlushAllResponseProtocol getResponseProtocol() {
+        return new TextFlushAllResponseProtocol();
     }
 }

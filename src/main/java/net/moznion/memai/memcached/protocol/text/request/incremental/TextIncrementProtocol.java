@@ -2,6 +2,7 @@ package net.moznion.memai.memcached.protocol.text.request.incremental;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import net.moznion.memai.memcached.protocol.text.response.TextIncrementalResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
@@ -17,5 +18,10 @@ public class TextIncrementProtocol implements TextIncrementalProtocol<TextIncrem
 
     public String command() {
         return "incr";
+    }
+
+    @Override
+    public TextIncrementalResponseProtocol getResponseProtocol() {
+        return new TextIncrementalResponseProtocol();
     }
 }

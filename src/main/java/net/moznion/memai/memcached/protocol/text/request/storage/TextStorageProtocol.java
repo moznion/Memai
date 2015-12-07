@@ -1,8 +1,9 @@
 package net.moznion.memai.memcached.protocol.text.request.storage;
 
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
-public interface TextStorageProtocol<T> extends Protocol {
+public interface TextStorageProtocol<T> extends TextRequestProtocol<TextStorageResponseProtocol> {
     T key(String key);
 
     T data(String data);

@@ -2,11 +2,11 @@ package net.moznion.memai.memcached.protocol.text.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.response.TextStatsResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
-public class TextStatsProtocol implements Protocol {
+public class TextStatsProtocol implements TextRequestProtocol<TextStatsResponseProtocol> {
     private String args;
 
     public TextStatsProtocol() {
@@ -20,5 +20,10 @@ public class TextStatsProtocol implements Protocol {
     @Override
     public byte[] build() {
         return ("stats " + args + "\r\n").getBytes();
+    }
+
+    @Override
+    public TextStatsResponseProtocol getResponseProtocol() {
+        return new TextStatsResponseProtocol();
     }
 }

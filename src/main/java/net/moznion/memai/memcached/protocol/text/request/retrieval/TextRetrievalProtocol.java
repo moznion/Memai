@@ -1,11 +1,13 @@
 package net.moznion.memai.memcached.protocol.text.request.retrieval;
 
 import net.moznion.memai.memcached.protocol.Protocol;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextRetrievalResponseProtocol;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public interface TextRetrievalProtocol<T> extends Protocol {
+public interface TextRetrievalProtocol<T> extends TextRequestProtocol<TextRetrievalResponseProtocol> {
     T setKeys(String... keys);
 
     T setKeys(List<String> keys);

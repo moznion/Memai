@@ -1,6 +1,7 @@
 package net.moznion.memai.memcached.protocol.text.request.retrieval;
 
 import lombok.Getter;
+import net.moznion.memai.memcached.protocol.text.response.TextRetrievalResponseProtocol;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,5 +68,10 @@ public class TextGetProtocol implements TextRetrievalProtocol<TextGetProtocol> {
     @Override
     public String command() {
         return "get";
+    }
+
+    @Override
+    public TextRetrievalResponseProtocol getResponseProtocol() {
+        return new TextRetrievalResponseProtocol();
     }
 }

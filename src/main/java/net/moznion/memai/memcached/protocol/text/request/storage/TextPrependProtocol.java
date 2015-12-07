@@ -2,6 +2,7 @@ package net.moznion.memai.memcached.protocol.text.request.storage;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
 @Data
 @Accessors(fluent = true)
@@ -23,5 +24,10 @@ public class TextPrependProtocol implements TextStorageProtocol<TextPrependProto
     @Override
     public String command() {
         return "prepend";
+    }
+
+    @Override
+    public TextStorageResponseProtocol getResponseProtocol() {
+        return new TextStorageResponseProtocol();
     }
 }
