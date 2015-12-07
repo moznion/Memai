@@ -1,11 +1,12 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
+import net.moznion.memai.memcached.protocol.response.IncrementalResponse;
 import net.moznion.memai.memcached.protocol.text.request.incremental.TextDecrementProtocol;
 
 import java.util.concurrent.CompletableFuture;
 
-public class DecrementCommand implements Command<TextDecrementProtocol> {
+public class DecrementCommand implements Command<IncrementalResponse> {
     private final Worker worker;
     private final TextDecrementProtocol protocol;
 
@@ -15,7 +16,7 @@ public class DecrementCommand implements Command<TextDecrementProtocol> {
     }
 
     @Override
-    public CompletableFuture<TextDecrementProtocol> execute() {
+    public CompletableFuture<IncrementalResponse> execute() {
         return worker.appendJob(protocol);
     }
 

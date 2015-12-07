@@ -1,12 +1,13 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
+import net.moznion.memai.memcached.protocol.response.StorageResponse;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextCASProtocol;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
-public class CASCommand implements Command<TextCASProtocol> {
+public class CASCommand implements Command<StorageResponse> {
     private final Worker worker;
     private final TextCASProtocol protocol;
 
@@ -16,7 +17,7 @@ public class CASCommand implements Command<TextCASProtocol> {
     }
 
     @Override
-    public CompletableFuture<TextCASProtocol> execute() {
+    public CompletableFuture<StorageResponse> execute() {
         return worker.appendJob(protocol);
     }
 

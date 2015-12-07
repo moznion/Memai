@@ -1,8 +1,9 @@
 package net.moznion.memai.memcached;
 
 import lombok.AllArgsConstructor;
-import net.moznion.memai.memcached.protocol.Protocol;
 import net.moznion.memai.memcached.protocol.response.Response;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextResponseProtocol;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -18,7 +19,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class Worker implements Runnable {
     private final Socket socket;
     private final InetSocketAddress address;
-    private final BlockingQueue<JobWithFuture<? extends Protocol>> queue;
+    private final BlockingQueue<JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>, ? extends Response>> queue;
 
     public Worker(final InetSocketAddress address) throws IOException {
         this.queue = new LinkedBlockingDeque<>();
@@ -26,9 +27,9 @@ public class Worker implements Runnable {
         this.address = address;
     }
 
-    public <T extends Protocol> CompletableFuture<? extends Response> appendJob(T job) {
-        final CompletableFuture<? extends Response> future = new CompletableFuture<>();
-        final JobWithFuture<T> jobWithFuture = new JobWithFuture<>(job, future);
+    public <T extends TextRequestProtocol<TextResponseProtocol>, U extends Response> CompletableFuture<U> appendJob(T job) {
+        final CompletableFuture<U> future = new CompletableFuture<>();
+        final JobWithFuture<T, U> jobWithFuture = new JobWithFuture<>(job, future);
         queue.add(jobWithFuture);
         return future;
     }
@@ -36,10 +37,10 @@ public class Worker implements Runnable {
     @Override
     public void run() {
         while (true) {
-            JobWithFuture<? extends Protocol> jobWithFuture = null;
+            JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>, ? extends Response> jobWithFuture = null;
             try {
                 jobWithFuture = queue.take();
-                final Protocol job = jobWithFuture.job;
+                final TextRequestProtocol<TextResponseProtocol> job = jobWithFuture.job;
                 final byte[] built = job.build();
 
                 if (!socket.isConnected()) {
@@ -53,7 +54,8 @@ public class Worker implements Runnable {
                 // TODO noreply support
                 final DataInputStream in = new DataInputStream(socket.getInputStream());
                 try (final BufferedReader buff = new BufferedReader(new InputStreamReader(in))) {
-                    final String res = buff.readLine();
+                    final String result = buff.readLine();
+                    jobWithFuture.future.complete(job.getResponseProtocol().parse(result));
                 }
 
                 out.close();
@@ -67,8 +69,8 @@ public class Worker implements Runnable {
     }
 
     @AllArgsConstructor
-    private static class JobWithFuture<T extends Protocol> {
+    private static class JobWithFuture<T extends TextRequestProtocol<TextResponseProtocol>, U extends Response> {
         private T job;
-        private CompletableFuture<? extends Response> future;
+        private CompletableFuture<Response> future;
     }
 }

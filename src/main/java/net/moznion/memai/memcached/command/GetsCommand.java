@@ -1,12 +1,13 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
+import net.moznion.memai.memcached.protocol.response.RetrievalResponse;
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetsProtocol;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class GetsCommand implements Command<TextGetsProtocol> {
+public class GetsCommand implements Command<RetrievalResponse> {
     private final Worker worker;
     private final TextGetsProtocol protocol;
 
@@ -16,7 +17,7 @@ public class GetsCommand implements Command<TextGetsProtocol> {
     }
 
     @Override
-    public CompletableFuture<TextGetsProtocol> execute() {
+    public CompletableFuture<RetrievalResponse> execute() {
         return worker.appendJob(protocol);
     }
 

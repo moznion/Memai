@@ -1,12 +1,13 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
+import net.moznion.memai.memcached.protocol.response.StorageResponse;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextAddProtocol;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
-public class AddCommand implements Command<TextAddProtocol> {
+public class AddCommand implements Command<StorageResponse> {
     private final Worker worker;
     private final TextAddProtocol protocol;
 
@@ -16,7 +17,7 @@ public class AddCommand implements Command<TextAddProtocol> {
     }
 
     @Override
-    public CompletableFuture<TextAddProtocol> execute() {
+    public CompletableFuture<StorageResponse> execute() {
         return worker.appendJob(protocol);
     }
 
