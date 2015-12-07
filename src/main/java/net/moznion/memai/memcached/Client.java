@@ -2,7 +2,7 @@ package net.moznion.memai.memcached;
 
 import net.moznion.memai.memcached.command.AddCommand;
 import net.moznion.memai.memcached.command.AppendCommand;
-import net.moznion.memai.memcached.command.CasCommand;
+import net.moznion.memai.memcached.command.CASCommand;
 import net.moznion.memai.memcached.command.DecrementCommand;
 import net.moznion.memai.memcached.command.GetCommand;
 import net.moznion.memai.memcached.command.GetsCommand;
@@ -16,7 +16,7 @@ import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetProtoc
 import net.moznion.memai.memcached.protocol.text.request.retrieval.TextGetsProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextAddProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextAppendProtocol;
-import net.moznion.memai.memcached.protocol.text.request.storage.TextCasProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextCASProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextPrependProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextReplaceProtocol;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextSetProtocol;
@@ -60,9 +60,9 @@ public class Client {
         return new AppendCommand(new TextAppendProtocol(key, data), workers.get(cursor));
     }
 
-    public CasCommand cas(final String key, final String data) {
+    public CASCommand cas(final String key, final String data) {
         balance();
-        return new CasCommand(new TextCasProtocol(key, data), workers.get(cursor));
+        return new CASCommand(new TextCASProtocol(key, data), workers.get(cursor));
     }
 
     public PrependCommand prepend(final String key, final String data) {

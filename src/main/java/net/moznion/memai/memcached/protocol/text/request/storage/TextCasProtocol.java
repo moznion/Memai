@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(fluent = true)
-public class TextCasProtocol implements TextStorageProtocol<TextCasProtocol> {
+public class TextCASProtocol implements TextStorageProtocol<TextCASProtocol> {
     private String key;
     private String data;
     private int flags;
@@ -13,7 +13,7 @@ public class TextCasProtocol implements TextStorageProtocol<TextCasProtocol> {
     private boolean noreply;
     private long casUnique;
 
-    public TextCasProtocol(final String key, final String data) {
+    public TextCASProtocol(final String key, final String data) {
         this.key = key;
         this.data = data;
         this.flags = 0;

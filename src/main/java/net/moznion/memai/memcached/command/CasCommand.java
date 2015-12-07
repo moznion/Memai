@@ -1,51 +1,51 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
-import net.moznion.memai.memcached.protocol.text.request.storage.TextCasProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextCASProtocol;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
-public class CasCommand implements Command<TextCasProtocol> {
+public class CASCommand implements Command<TextCASProtocol> {
     private final Worker worker;
-    private final TextCasProtocol protocol;
+    private final TextCASProtocol protocol;
 
-    public CasCommand(final TextCasProtocol textReplaceProtocol, final Worker worker) {
+    public CASCommand(final TextCASProtocol textReplaceProtocol, final Worker worker) {
         this.protocol = textReplaceProtocol;
         this.worker = worker;
     }
 
     @Override
-    public CompletableFuture<TextCasProtocol> execute() {
+    public CompletableFuture<TextCASProtocol> execute() {
         return worker.appendJob(protocol);
     }
 
-    public CasCommand key(final String key) {
+    public CASCommand key(final String key) {
         protocol.key(key);
         return this;
     }
 
-    public CasCommand data(final byte[] data) {
+    public CASCommand data(final byte[] data) {
         protocol.data(Arrays.toString(data));
         return this;
     }
 
-    public CasCommand flags(final int flags) {
+    public CASCommand flags(final int flags) {
         protocol.flags(flags);
         return this;
     }
 
-    public CasCommand exptime(final int exptime) {
+    public CASCommand exptime(final int exptime) {
         protocol.exptime(exptime);
         return this;
     }
 
-    public CasCommand noreply(final boolean noreply) {
+    public CASCommand noreply(final boolean noreply) {
         protocol.noreply(noreply);
         return this;
     }
 
-    public CasCommand casUnique(final long casUnique) {
+    public CASCommand casUnique(final long casUnique) {
         protocol.casUnique(casUnique);
         return this;
     }
