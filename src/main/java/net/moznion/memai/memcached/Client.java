@@ -47,7 +47,7 @@ public class Client {
         this.numberOfWorkers = numberOfWorkers;
 
         for (int i = 0; i < numberOfWorkers; i++) {
-            final Worker worker = new Worker(address, new LinkedBlockingQueue<>());
+            final Worker worker = new Worker(address);
             workers.add(worker);
             new Thread(worker).start();
         }

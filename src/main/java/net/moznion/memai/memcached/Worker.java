@@ -1,5 +1,6 @@
 package net.moznion.memai.memcached;
 
+import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.Protocol;
 
 import java.io.BufferedReader;
@@ -11,21 +12,23 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Worker implements Runnable {
     private final Socket socket;
     private final InetSocketAddress address;
-    private final BlockingQueue<Protocol> queue;
+    private final BlockingQueue<JobWithFuture<? extends Protocol>> queue;
 
-    public Worker(final InetSocketAddress address, final BlockingQueue<Protocol> queue) throws IOException {
-        this.queue = queue;
+    public Worker(final InetSocketAddress address) throws IOException {
+        this.queue = new LinkedBlockingDeque<>();
         this.socket = new Socket();
         this.address = address;
     }
 
     public <T extends Protocol> CompletableFuture<T> appendJob(T job) {
         final CompletableFuture<T> future = new CompletableFuture<>();
-        queue.add(job);
+        final JobWithFuture<T> jobWithFuture = new JobWithFuture<>(job, future);
+        queue.add(jobWithFuture);
         return future;
     }
 
@@ -33,7 +36,9 @@ public class Worker implements Runnable {
     public void run() {
         while (true) {
             try {
-                final Protocol job = queue.take();
+                final JobWithFuture<? extends Protocol> jobWithFuture = queue.take();
+
+                final Protocol job = jobWithFuture.job;
                 final byte[] built = job.build();
 
                 if (!socket.isConnected()) {
@@ -57,5 +62,11 @@ public class Worker implements Runnable {
                 // TODO
             }
         }
+    }
+
+    @AllArgsConstructor
+    private static class JobWithFuture<T extends Protocol> {
+        private T job;
+        private CompletableFuture<T> future;
     }
 }
