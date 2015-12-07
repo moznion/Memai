@@ -40,6 +40,13 @@ public class TextGetProtocol implements TextRetrievalProtocol<TextGetProtocol> {
     }
 
     @Override
+    public TextGetProtocol setKey(String key) {
+        this.keys.clear();
+        this.keys.add(key);
+        return this;
+    }
+
+    @Override
     public TextGetProtocol appendKeys(String... keys) {
         this.keys.addAll(Arrays.asList(keys));
         return this;

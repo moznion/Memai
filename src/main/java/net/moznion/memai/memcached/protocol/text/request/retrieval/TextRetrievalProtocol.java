@@ -10,6 +10,8 @@ public interface TextRetrievalProtocol<T> extends Protocol {
 
     T setKeys(List<String> keys);
 
+    T setKey(String key);
+
     T appendKeys(String... keys);
 
     T appendKeys(List<String> keys);
