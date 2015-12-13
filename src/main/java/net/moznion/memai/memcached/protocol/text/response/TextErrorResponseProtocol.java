@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TextErrorResponseProtocol implements TextResponseProtocol<ErrorResponse> {
+public class TextErrorResponseProtocol {
     public ErrorResponse parse(final String response) throws IllegalMemcachedErrorResponseProtocolException {
         final List<String> splitted = Arrays.asList(response.trim().split(" "));
 

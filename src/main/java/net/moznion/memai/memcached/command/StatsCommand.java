@@ -2,6 +2,7 @@ package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
 import net.moznion.memai.memcached.protocol.response.StatsResponse;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
 import net.moznion.memai.memcached.protocol.text.request.TextStatsProtocol;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,6 +23,6 @@ public class StatsCommand implements Command<StatsResponse> {
 
     @Override
     public CompletableFuture<StatsResponse> execute() {
-        return worker.appendJob(protocol);
+        return worker.<TextRequestProtocol, StatsResponse>appendJob(protocol);
     }
 }

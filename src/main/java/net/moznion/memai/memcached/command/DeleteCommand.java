@@ -3,6 +3,7 @@ package net.moznion.memai.memcached.command;
 import net.moznion.memai.memcached.Worker;
 import net.moznion.memai.memcached.protocol.response.DeleteResponse;
 import net.moznion.memai.memcached.protocol.text.request.TextDeleteProtocol;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,6 +28,6 @@ public class DeleteCommand implements Command<DeleteResponse> {
 
     @Override
     public CompletableFuture<DeleteResponse> execute() {
-        return worker.appendJob(protocol);
+        return worker.<TextRequestProtocol, DeleteResponse>appendJob(protocol);
     }
 }

@@ -3,6 +3,7 @@ package net.moznion.memai.memcached.command;
 import net.moznion.memai.memcached.Worker;
 import net.moznion.memai.memcached.protocol.response.StorageResponse;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextReplaceProtocol;
+import net.moznion.memai.memcached.protocol.text.request.storage.TextStorageProtocol;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -18,7 +19,7 @@ public class ReplaceCommand implements Command<StorageResponse> {
 
     @Override
     public CompletableFuture<StorageResponse> execute() {
-        return worker.appendJob(protocol);
+        return worker.<TextStorageProtocol, StorageResponse>appendJob(protocol);
     }
 
     public ReplaceCommand key(final String key) {

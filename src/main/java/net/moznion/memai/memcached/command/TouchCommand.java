@@ -2,6 +2,7 @@ package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Worker;
 import net.moznion.memai.memcached.protocol.response.TouchResponse;
+import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
 import net.moznion.memai.memcached.protocol.text.request.TextTouchProtocol;
 
 import java.util.concurrent.CompletableFuture;
@@ -32,6 +33,6 @@ public class TouchCommand implements Command<TouchResponse> {
 
     @Override
     public CompletableFuture<TouchResponse> execute() {
-        return worker.appendJob(protocol);
+        return worker.<TextRequestProtocol, TouchResponse>appendJob(protocol);
     }
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class Worker implements Runnable {
     private final Socket socket;
     private final InetSocketAddress address;
-    private final BlockingQueue<JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>, ? extends Response>> queue;
+    private final BlockingQueue<JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>>> queue;
 
     public Worker(final InetSocketAddress address) throws IOException {
         this.queue = new LinkedBlockingDeque<>();
@@ -29,7 +29,7 @@ public class Worker implements Runnable {
 
     public <T extends TextRequestProtocol<TextResponseProtocol>, U extends Response> CompletableFuture<U> appendJob(T job) {
         final CompletableFuture<U> future = new CompletableFuture<>();
-        final JobWithFuture<T, U> jobWithFuture = new JobWithFuture<>(job, future);
+        final JobWithFuture<T> jobWithFuture = new JobWithFuture<>(job, (CompletableFuture<Response>) future);
         queue.add(jobWithFuture);
         return future;
     }
@@ -37,7 +37,7 @@ public class Worker implements Runnable {
     @Override
     public void run() {
         while (true) {
-            JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>, ? extends Response> jobWithFuture = null;
+            JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>> jobWithFuture = null;
             try {
                 jobWithFuture = queue.take();
                 final TextRequestProtocol<TextResponseProtocol> job = jobWithFuture.job;
@@ -69,7 +69,7 @@ public class Worker implements Runnable {
     }
 
     @AllArgsConstructor
-    private static class JobWithFuture<T extends TextRequestProtocol<TextResponseProtocol>, U extends Response> {
+    private static class JobWithFuture<T extends TextRequestProtocol<TextResponseProtocol>> {
         private T job;
         private CompletableFuture<Response> future;
     }

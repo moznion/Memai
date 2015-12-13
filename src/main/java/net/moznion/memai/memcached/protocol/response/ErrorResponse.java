@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.moznion.memai.memcached.protocol.response.type.ErrorResponseType;
 
+import java.util.Optional;
+
 @Getter
 @AllArgsConstructor
 public class ErrorResponse {
