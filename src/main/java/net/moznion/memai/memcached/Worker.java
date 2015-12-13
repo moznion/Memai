@@ -3,7 +3,6 @@ package net.moznion.memai.memcached;
 import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.response.Response;
 import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
-import net.moznion.memai.memcached.protocol.text.response.TextResponseProtocol;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -19,7 +18,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class Worker implements Runnable {
     private final Socket socket;
     private final InetSocketAddress address;
-    private final BlockingQueue<JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>>> queue;
+    private final BlockingQueue<JobWithFuture> queue;
 
     public Worker(final InetSocketAddress address) throws IOException {
         this.queue = new LinkedBlockingDeque<>();
@@ -27,9 +26,10 @@ public class Worker implements Runnable {
         this.address = address;
     }
 
-    public <T extends TextRequestProtocol<TextResponseProtocol>, U extends Response> CompletableFuture<U> appendJob(T job) {
+    public <U extends Response> CompletableFuture<U> appendJob(TextRequestProtocol job) {
         final CompletableFuture<U> future = new CompletableFuture<>();
-        final JobWithFuture<T> jobWithFuture = new JobWithFuture<>(job, (CompletableFuture<Response>) future);
+
+        final JobWithFuture<U> jobWithFuture = new JobWithFuture<>(job, future);
         queue.add(jobWithFuture);
         return future;
     }
@@ -37,10 +37,10 @@ public class Worker implements Runnable {
     @Override
     public void run() {
         while (true) {
-            JobWithFuture<? extends TextRequestProtocol<TextResponseProtocol>> jobWithFuture = null;
+            JobWithFuture jobWithFuture;
             try {
                 jobWithFuture = queue.take();
-                final TextRequestProtocol<TextResponseProtocol> job = jobWithFuture.job;
+                final TextRequestProtocol job = jobWithFuture.job;
                 final byte[] built = job.build();
 
                 if (!socket.isConnected()) {
@@ -69,8 +69,8 @@ public class Worker implements Runnable {
     }
 
     @AllArgsConstructor
-    private static class JobWithFuture<T extends TextRequestProtocol<TextResponseProtocol>> {
-        private T job;
-        private CompletableFuture<Response> future;
+    private static class JobWithFuture<U extends Response> {
+        private TextRequestProtocol job;
+        private CompletableFuture<U> future;
     }
 }

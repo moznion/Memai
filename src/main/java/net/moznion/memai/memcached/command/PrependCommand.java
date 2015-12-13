@@ -3,7 +3,6 @@ package net.moznion.memai.memcached.command;
 import net.moznion.memai.memcached.Worker;
 import net.moznion.memai.memcached.protocol.response.StorageResponse;
 import net.moznion.memai.memcached.protocol.text.request.storage.TextPrependProtocol;
-import net.moznion.memai.memcached.protocol.text.request.storage.TextStorageProtocol;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +18,7 @@ public class PrependCommand implements Command<StorageResponse> {
 
     @Override
     public CompletableFuture<StorageResponse> execute() {
-        return worker.<TextStorageProtocol, StorageResponse>appendJob(protocol);
+        return worker.<StorageResponse>appendJob(protocol);
     }
 
     public PrependCommand key(final String key) {
