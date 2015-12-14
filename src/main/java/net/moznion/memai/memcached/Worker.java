@@ -3,6 +3,8 @@ package net.moznion.memai.memcached;
 import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.response.Response;
 import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextDeleteResponseProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextResponseProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
 import java.io.BufferedReader;
@@ -46,8 +48,11 @@ public class Worker implements Runnable {
                 final TextRequestProtocol job = jobWithFuture.job;
                 final byte[] built = job.build();
 
+                final TextResponseProtocol responseProtocol = job.getResponseProtocol();
+
                 Pattern terminatorPattern = STANDARD_TERMINATOR_PATTERN;
-                if (job.getResponseProtocol() instanceof TextStorageResponseProtocol) {
+                if (responseProtocol instanceof TextStorageResponseProtocol ||
+                        responseProtocol instanceof TextDeleteResponseProtocol) {
                     terminatorPattern = ONE_LINER_TERMINATOR_PATTERN;
                 }
 
@@ -63,7 +68,7 @@ public class Worker implements Runnable {
                         // TODO noreply support
                         final String result = readResult(in, terminatorPattern);
 
-                        jobWithFuture.future.complete(job.getResponseProtocol().parse(result));
+                        jobWithFuture.future.complete(responseProtocol.parse(result));
                     }
                 }
             } catch (Throwable e) {

@@ -8,7 +8,6 @@ import net.moznion.memai.memcached.protocol.response.type.RetrievalResponseType;
 import net.moznion.memai.memcached.protocol.response.type.StorageResponseType;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 
@@ -16,7 +15,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class SetCommandTest extends TestBase {
     @Test
-    public void testForSet() throws IOException, InterruptedException {
+    public void testForSet() throws Exception {
         final Client client = new Client(new InetSocketAddress("127.0.0.1", 11211), 1);
 
         final CompletableFuture<StorageResponse> futureOfSet = client.set("test-key", "blahblah").execute();
@@ -31,7 +30,7 @@ public class SetCommandTest extends TestBase {
     }
 
     @Test
-    public void testForSetMultiByte() throws IOException, InterruptedException {
+    public void testForSetMultiByte() throws Exception {
         final Client client = new Client(new InetSocketAddress("127.0.0.1", 11211), 1);
 
         final CompletableFuture<StorageResponse> futureOfSet = client.set("テストキー", "こんにちは").execute();
