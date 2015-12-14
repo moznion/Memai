@@ -3,26 +3,29 @@ package net.moznion.memai.memcached;
 import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.response.Response;
 import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.regex.Pattern;
 
 public class Worker implements Runnable {
-    private final Socket socket;
+    private static final Pattern STANDARD_TERMINATOR_PATTERN = Pattern.compile("^(?:OK|END|ERROR)\r\n$");
+    private static final Pattern ONE_LINER_TERMINATOR_PATTERN = Pattern.compile("\r\n$");
+
     private final InetSocketAddress address;
     private final BlockingQueue<JobWithFuture> queue;
 
     public Worker(final InetSocketAddress address) throws IOException {
         this.queue = new LinkedBlockingDeque<>();
-        this.socket = new Socket();
         this.address = address;
     }
 
@@ -43,29 +46,64 @@ public class Worker implements Runnable {
                 final TextRequestProtocol job = jobWithFuture.job;
                 final byte[] built = job.build();
 
-                if (!socket.isConnected()) {
-                    socket.connect(address);
+                Pattern terminatorPattern = STANDARD_TERMINATOR_PATTERN;
+                if (job.getResponseProtocol() instanceof TextStorageResponseProtocol) {
+                    terminatorPattern = ONE_LINER_TERMINATOR_PATTERN;
                 }
 
-                final DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                out.write(built);
-                out.flush();
+                // TODO
+                final Socket socket = new Socket();
+                socket.connect(address);
 
-                // TODO noreply support
-                final DataInputStream in = new DataInputStream(socket.getInputStream());
-                try (final BufferedReader buff = new BufferedReader(new InputStreamReader(in))) {
-                    final String result = buff.readLine();
-                    jobWithFuture.future.complete(job.getResponseProtocol().parse(result));
+                try (final OutputStream out = socket.getOutputStream()) {
+                    out.write(built);
+                    out.flush();
+
+                    try (final InputStream in = socket.getInputStream()) {
+                        // TODO noreply support
+                        final String result = readResult(in, terminatorPattern);
+
+                        jobWithFuture.future.complete(job.getResponseProtocol().parse(result));
+                    }
                 }
-
-                out.close();
-                in.close();
             } catch (Throwable e) {
                 // TODO
             } finally {
                 // TODO
             }
         }
+    }
+
+    private String readResult(InputStream in, Pattern terminatorPattern) throws IOException {
+        StringBuilder sbForLine = new StringBuilder();
+        final StringBuilder sbForResult = new StringBuilder();
+
+        boolean isBeforeCR = false;
+
+        try (final BufferedReader buff = new BufferedReader(new InputStreamReader(in))) {
+            for (int c = buff.read(); c >= 0; c = buff.read()) {
+                sbForLine.append((char) c);
+                if (c == 13) {
+                    isBeforeCR = true;
+                    continue;
+                }
+
+                if (c == 10) {
+                    if (isBeforeCR) {
+                        final String line = sbForLine.toString();
+                        sbForResult.append(line);
+
+                        if (terminatorPattern.matcher(line).find()) {
+                            break;
+                        }
+                        sbForLine = new StringBuilder();
+                    }
+                }
+                isBeforeCR = false;
+            }
+        }
+
+        return sbForResult.toString();
     }
 
     @AllArgsConstructor

@@ -3,6 +3,8 @@ package net.moznion.memai.memcached.protocol.text.request.storage;
 import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
+import java.nio.charset.StandardCharsets;
+
 public interface TextStorageProtocol<T> extends TextRequestProtocol<TextStorageResponseProtocol> {
     T key(String key);
 
@@ -32,7 +34,7 @@ public interface TextStorageProtocol<T> extends TextRequestProtocol<TextStorageR
                 .append(" ").append(key())
                 .append(" ").append(flags())
                 .append(" ").append(exptime())
-                .append(" ").append(data().length());
+                .append(" ").append(data().getBytes(StandardCharsets.UTF_8).length);
 
         if (noreply()) {
             sb.append(" noreply");
