@@ -47,7 +47,7 @@ public class TextRetrievalResponseProtocol implements TextResponseProtocol<Retri
                     throw new IllegalMemcachedRetrievalResponseProtocolException();
             }
 
-            line = lines.get(++i);
+            line = splited.get(++i);
 
             values.put(key, new ValueResponse(flags, bytes, casUnique, line));
         }
