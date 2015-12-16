@@ -27,6 +27,6 @@ public class DeleteCommand implements Command<DeleteResponse> {
 
     @Override
     public CompletableFuture<DeleteResponse> execute() {
-        return worker.<DeleteResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 }

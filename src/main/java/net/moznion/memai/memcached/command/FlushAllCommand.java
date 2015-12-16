@@ -22,6 +22,6 @@ public class FlushAllCommand implements Command<FlushAllResponse> {
 
     @Override
     public CompletableFuture<FlushAllResponse> execute() {
-        return worker.<FlushAllResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 }

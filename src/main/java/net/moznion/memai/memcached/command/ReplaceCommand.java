@@ -18,7 +18,7 @@ public class ReplaceCommand implements Command<StorageResponse> {
 
     @Override
     public CompletableFuture<StorageResponse> execute() {
-        return worker.<StorageResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public ReplaceCommand key(final String key) {

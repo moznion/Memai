@@ -17,7 +17,7 @@ public class IncrementCommand implements Command<IncrementalResponse> {
 
     @Override
     public CompletableFuture<IncrementalResponse> execute() {
-        return worker.<IncrementalResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public IncrementCommand key(final String key) {

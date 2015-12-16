@@ -18,7 +18,7 @@ public class GetsCommand implements Command<RetrievalResponse> {
 
     @Override
     public CompletableFuture<RetrievalResponse> execute() {
-        return worker.<RetrievalResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public GetsCommand setKeys(String... keys) {

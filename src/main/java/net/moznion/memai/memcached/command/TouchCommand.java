@@ -32,6 +32,6 @@ public class TouchCommand implements Command<TouchResponse> {
 
     @Override
     public CompletableFuture<TouchResponse> execute() {
-        return worker.<TouchResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 }

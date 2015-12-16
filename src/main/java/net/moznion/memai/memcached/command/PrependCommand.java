@@ -18,7 +18,7 @@ public class PrependCommand implements Command<StorageResponse> {
 
     @Override
     public CompletableFuture<StorageResponse> execute() {
-        return worker.<StorageResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 
     public PrependCommand key(final String key) {

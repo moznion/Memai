@@ -22,6 +22,6 @@ public class StatsCommand implements Command<StatsResponse> {
 
     @Override
     public CompletableFuture<StatsResponse> execute() {
-        return worker.<StatsResponse>appendJob(protocol);
+        return worker.appendJob(protocol);
     }
 }
