@@ -28,6 +28,8 @@ public interface TextIncrementalProtocol<T> extends TextRequestProtocol<TextIncr
             sb.append(" noreply");
         }
 
+        sb.append("\r\n");
+
         return sb.toString().getBytes();
     }
 }

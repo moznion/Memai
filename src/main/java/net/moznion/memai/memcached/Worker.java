@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.moznion.memai.memcached.protocol.response.Response;
 import net.moznion.memai.memcached.protocol.text.request.TextRequestProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextDeleteResponseProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextIncrementalResponseProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextResponseProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
 
@@ -52,7 +53,8 @@ public class Worker implements Runnable {
 
                 Pattern terminatorPattern = STANDARD_TERMINATOR_PATTERN;
                 if (responseProtocol instanceof TextStorageResponseProtocol ||
-                        responseProtocol instanceof TextDeleteResponseProtocol) {
+                        responseProtocol instanceof TextDeleteResponseProtocol ||
+                        responseProtocol instanceof TextIncrementalResponseProtocol) {
                     terminatorPattern = ONE_LINER_TERMINATOR_PATTERN;
                 }
 
