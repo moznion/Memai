@@ -7,6 +7,7 @@ import net.moznion.memai.memcached.protocol.text.response.TextDeleteResponseProt
 import net.moznion.memai.memcached.protocol.text.response.TextIncrementalResponseProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextResponseProtocol;
 import net.moznion.memai.memcached.protocol.text.response.TextStorageResponseProtocol;
+import net.moznion.memai.memcached.protocol.text.response.TextTouchResponseProtocol;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,7 +55,8 @@ public class Worker implements Runnable {
                 Pattern terminatorPattern = STANDARD_TERMINATOR_PATTERN;
                 if (responseProtocol instanceof TextStorageResponseProtocol ||
                         responseProtocol instanceof TextDeleteResponseProtocol ||
-                        responseProtocol instanceof TextIncrementalResponseProtocol) {
+                        responseProtocol instanceof TextIncrementalResponseProtocol ||
+                        responseProtocol instanceof TextTouchResponseProtocol) {
                     terminatorPattern = ONE_LINER_TERMINATOR_PATTERN;
                 }
 
