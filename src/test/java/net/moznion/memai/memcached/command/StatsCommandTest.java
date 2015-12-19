@@ -22,6 +22,7 @@ public class StatsCommandTest {
         assertThat(statsResponse.getResponseType()).isEqualTo(StatsResponseType.OK);
         assertThat(statsResponse.getStats().get("threads")).isNotNull();
         assertThat(statsResponse.getStats().get("DUMMY-KEY-FOR-TEST")).isNull();
+        assertThat(statsResponse.isAffected()).isTrue();
     }
 
     @Test
@@ -37,6 +38,7 @@ public class StatsCommandTest {
             assertThat(statsResponse.getResponseType()).isEqualTo(StatsResponseType.OK);
             assertThat(statsResponse.getStats().get("slab_reassign")).isNotNull();
             assertThat(statsResponse.getStats().get("DUMMY-KEY-FOR-TEST")).isNull();
+            assertThat(statsResponse.isAffected()).isTrue();
         }
 
         // With method
@@ -48,6 +50,7 @@ public class StatsCommandTest {
             assertThat(statsResponse.getResponseType()).isEqualTo(StatsResponseType.OK);
             assertThat(statsResponse.getStats().get("slab_reassign")).isNotNull();
             assertThat(statsResponse.getStats().get("DUMMY-KEY-FOR-TEST")).isNull();
+            assertThat(statsResponse.isAffected()).isTrue();
         }
     }
 }

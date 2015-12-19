@@ -25,6 +25,7 @@ public class IncrementCommandTest extends TestBase {
         final OptionalLong maybeValue = responseOfIncr.getValue();
         assertThat(maybeValue).isPresent();
         assertThat(maybeValue.getAsLong()).isEqualTo(101);
+        assertThat(responseOfIncr.isAffected()).isTrue();
     }
 
     @Test
@@ -36,5 +37,6 @@ public class IncrementCommandTest extends TestBase {
         assertThat(responseOfIncr.getResponseType()).isEqualTo(IncrementalResponseType.NOT_FOUND);
         final OptionalLong maybeValue = responseOfIncr.getValue();
         assertThat(maybeValue).isEmpty();
+        assertThat(responseOfIncr.isAffected()).isFalse();
     }
 }

@@ -1,11 +1,14 @@
 package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Client;
+import net.moznion.memai.memcached.protocol.response.FlushAllResponse;
+import net.moznion.memai.memcached.protocol.response.RetrievalResponse;
 import net.moznion.memai.memcached.protocol.response.ValueResponse;
 import org.junit.Test;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -26,9 +29,11 @@ public class FlushAllCommandTest {
         client.flushAll().execute();
 
         {
-            final Map<String, ValueResponse> values = client.get("test-key1", "test-key2").execute().join().getValues();
+            final RetrievalResponse response = client.get("test-key1", "test-key2").execute().join();
+            final Map<String, ValueResponse> values = response.getValues();
             assertThat(values.get("test-key1")).isNull();
             assertThat(values.get("test-key2")).isNull();
+            assertThat(response.isAffected()).isTrue();
         }
     }
 }

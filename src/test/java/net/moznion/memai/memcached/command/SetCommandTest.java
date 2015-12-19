@@ -27,6 +27,7 @@ public class SetCommandTest extends TestBase {
         final RetrievalResponse responseOfGet = futureOfGet.join();
         assertThat(responseOfGet.getResponseType()).isEqualTo(RetrievalResponseType.RETRIEVED);
         assertThat(responseOfGet.getValues().get("test-key").getData()).isEqualTo("blahblah"); // TODO
+        assertThat(responseOfGet.isAffected()).isTrue();
     }
 
     @Test
@@ -42,5 +43,6 @@ public class SetCommandTest extends TestBase {
         final RetrievalResponse responseOfGet = futureOfGet.join();
         assertThat(responseOfGet.getResponseType()).isEqualTo(RetrievalResponseType.RETRIEVED);
         assertThat(responseOfGet.getValues().get("テストキー").getData()).isEqualTo("こんにちは"); // TODO
+        assertThat(responseOfGet.isAffected()).isTrue();
     }
 }

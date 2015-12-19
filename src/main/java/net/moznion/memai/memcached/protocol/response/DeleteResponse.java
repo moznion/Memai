@@ -11,4 +11,5 @@ import java.util.Optional;
 public class DeleteResponse implements Response<DeleteResponseType> {
     private DeleteResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
+    private boolean affected;
 }

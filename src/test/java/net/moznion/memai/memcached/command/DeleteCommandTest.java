@@ -21,6 +21,7 @@ public class DeleteCommandTest {
         final DeleteResponse responseOfDelete = futureOfDelete.join();
         assertThat(responseOfDelete.getErrorResponse()).isEmpty();
         assertThat(responseOfDelete.getResponseType()).isEqualTo(DeleteResponseType.DELETED);
+        assertThat(responseOfDelete.isAffected()).isTrue();
     }
 
     @Test
@@ -31,5 +32,6 @@ public class DeleteCommandTest {
         final DeleteResponse responseOfDelete = futureOfDelete.join();
         assertThat(responseOfDelete.getErrorResponse()).isEmpty();
         assertThat(responseOfDelete.getResponseType()).isEqualTo(DeleteResponseType.NOT_FOUND);
+        assertThat(responseOfDelete.isAffected()).isFalse();
     }
 }
