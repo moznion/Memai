@@ -29,7 +29,7 @@ public class TextStatsResponseProtocol implements TextResponseProtocol<StatsResp
                 final ErrorResponse errorResponse;
                 try {
                     errorResponse = new TextErrorResponseProtocol().parse(response);
-                    return new StatsResponse(StatsResponseType.FAILED, Optional.of(errorResponse), Collections.emptyMap());
+                    return new StatsResponse(StatsResponseType.FAILED, Optional.of(errorResponse), Collections.emptyMap(), false);
                 } catch (IllegalMemcachedErrorResponseProtocolException e) {
                     throw new IllegalMemcachedStatsResponseProtocolException();
                 }
@@ -42,6 +42,6 @@ public class TextStatsResponseProtocol implements TextResponseProtocol<StatsResp
             stats.put(splitted.get(1), splitted.get(2));
         }
 
-        return new StatsResponse(StatsResponseType.OK, Optional.empty(), stats);
+        return new StatsResponse(StatsResponseType.OK, Optional.empty(), stats, true);
     }
 }

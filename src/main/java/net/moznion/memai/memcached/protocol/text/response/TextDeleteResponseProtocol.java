@@ -12,12 +12,12 @@ public class TextDeleteResponseProtocol implements TextResponseProtocol<DeleteRe
 
         switch (trimmed) {
             case "DELETED":
-                return new DeleteResponse(DeleteResponseType.DELETED, Optional.empty());
+                return new DeleteResponse(DeleteResponseType.DELETED, Optional.empty(), true);
             case "NOT_FOUND":
-                return new DeleteResponse(DeleteResponseType.NOT_FOUND, Optional.empty());
+                return new DeleteResponse(DeleteResponseType.NOT_FOUND, Optional.empty(), false);
             default:
                 return new DeleteResponse(DeleteResponseType.ERROR,
-                        Optional.of(new TextErrorResponseProtocol().parse(response)));
+                        Optional.of(new TextErrorResponseProtocol().parse(response)), false);
         }
     }
 }

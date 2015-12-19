@@ -24,6 +24,7 @@ public class TouchCommandTest extends TestBase {
         final TouchResponse response = futureOfTouch.join();
         assertThat(response.getResponseType()).isEqualTo(TouchResponseType.TOUCHED);
         assertThat(response.getErrorResponse()).isEmpty();
+        assertThat(response.isAffected()).isTrue();
 
         Thread.sleep(2000);
 
@@ -38,5 +39,6 @@ public class TouchCommandTest extends TestBase {
         final TouchResponse response = futureOfTouch.join();
         assertThat(response.getResponseType()).isEqualTo(TouchResponseType.NOT_FOUND);
         assertThat(response.getErrorResponse()).isEmpty();
+        assertThat(response.isAffected()).isFalse();
     }
 }

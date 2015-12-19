@@ -13,4 +13,5 @@ public class RetrievalResponse implements Response<RetrievalResponseType> {
     private RetrievalResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
     private Map<String, ValueResponse> values;
+    private boolean affected;
 }

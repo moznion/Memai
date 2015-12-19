@@ -11,4 +11,5 @@ import java.util.Optional;
 public class FlushAllResponse implements Response<FlushAllResponseType> {
     private FlushAllResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
+    private boolean affected;
 }

@@ -52,6 +52,6 @@ public class TextRetrievalResponseProtocol implements TextResponseProtocol<Retri
             values.put(key, new ValueResponse(flags, bytes, casUnique, line));
         }
 
-        return new RetrievalResponse(RetrievalResponseType.RETRIEVED, Optional.empty(), values);
+        return new RetrievalResponse(RetrievalResponseType.RETRIEVED, Optional.empty(), values, true);
     }
 }

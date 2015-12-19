@@ -6,4 +6,6 @@ public interface Response<T> {
     T getResponseType();
 
     Optional<ErrorResponse> getErrorResponse();
+
+    boolean isAffected();
 }

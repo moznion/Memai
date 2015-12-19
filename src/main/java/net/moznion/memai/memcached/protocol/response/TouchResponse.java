@@ -11,4 +11,5 @@ import java.util.Optional;
 public class TouchResponse implements Response<TouchResponseType> {
     private TouchResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
+    private boolean affected;
 }

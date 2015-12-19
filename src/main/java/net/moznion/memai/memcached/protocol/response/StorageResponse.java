@@ -11,4 +11,5 @@ import java.util.Optional;
 public class StorageResponse implements Response<StorageResponseType> {
     private StorageResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
+    private boolean affected;
 }

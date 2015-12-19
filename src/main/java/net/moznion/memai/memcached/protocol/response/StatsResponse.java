@@ -13,4 +13,5 @@ public class StatsResponse implements Response<StatsResponseType> {
     private StatsResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
     private Map<String, String> stats;
+    private boolean affected;
 }

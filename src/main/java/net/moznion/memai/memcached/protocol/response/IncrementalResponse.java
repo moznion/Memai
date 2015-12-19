@@ -13,4 +13,5 @@ public class IncrementalResponse implements Response<IncrementalResponseType> {
     private IncrementalResponseType responseType;
     private Optional<ErrorResponse> errorResponse;
     private OptionalLong value;
+    private boolean affected;
 }
