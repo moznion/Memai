@@ -2,7 +2,6 @@ package net.moznion.memai.memcached.command;
 
 import net.moznion.memai.memcached.Client;
 import net.moznion.memai.memcached.protocol.response.DeleteResponse;
-import net.moznion.memai.memcached.protocol.response.StorageResponse;
 import net.moznion.memai.memcached.protocol.response.type.DeleteResponseType;
 import org.junit.Test;
 
@@ -16,8 +15,7 @@ public class DeleteCommandTest {
     public void testForDeleteCommandWithExistedKey() throws Exception {
         final Client client = new Client(new InetSocketAddress("127.0.0.1", 11211), 1);
 
-        final CompletableFuture<StorageResponse> futureOfSet = client.set("test-key", "blahblah").execute();
-        final StorageResponse responseOfSet = futureOfSet.join();
+        client.set("test-key", "blahblah").execute().join();
 
         final CompletableFuture<DeleteResponse> futureOfDelete = client.delete("test-key").execute();
         final DeleteResponse responseOfDelete = futureOfDelete.join();

@@ -20,7 +20,12 @@ public class TextStatsResponseProtocol implements TextResponseProtocol<StatsResp
         for (String line : response.split("\r\n")) {
             final List<String> splitted = Arrays.asList(line.split(" "));
             final String cmd = splitted.get(0);
-            if (!cmd.equals("STAT") && !cmd.equals("END")) {
+
+            if (cmd.equals("END")) {
+                break;
+            }
+
+            if (!cmd.equals("STAT")) {
                 final ErrorResponse errorResponse;
                 try {
                     errorResponse = new TextErrorResponseProtocol().parse(response);

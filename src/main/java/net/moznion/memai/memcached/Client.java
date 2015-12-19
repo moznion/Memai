@@ -132,6 +132,11 @@ public class Client {
         return new StatsCommand(new TextStatsProtocol(), workers.get(cursor));
     }
 
+    public StatsCommand stats(final String args) {
+        balance();
+        return new StatsCommand(new TextStatsProtocol(args), workers.get(cursor));
+    }
+
     public FlushAllCommand flushAll() {
         balance();
         return new FlushAllCommand(new TextFlushAllProtocol(), workers.get(cursor));
